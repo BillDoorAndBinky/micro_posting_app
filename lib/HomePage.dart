@@ -16,25 +16,45 @@ class HomePage extends StatelessWidget {
 
   final String jwt;
   final Map<String, dynamic> payload;
+  String? CurrentUserLogin;
+
+  Future<String?> getUserData() async {
+    var res = await http.get(Uri.parse("$SERVER_IP/User/login"), headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $jwt"
+    });
+    if (res.statusCode == 200) {
+      Map<String, dynamic> respLogin = jsonDecode(res.body);
+      CurrentUserLogin = respLogin['UserName'];
+      return respLogin['UserName'];
+    }
+    return null;
+  }
+
+  Text getMainPage() {
+    return Text("Hi, $CurrentUserLogin!");
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: Text("Secret Data Screen")),
+        appBar: AppBar(title: const Text("Secret Data Screen")),
         body: Center(
           child: FutureBuilder(
-              future: http.read(
-                  Uri(scheme: 'https', host: SERVER_IP, path: '/data/'),
-                  headers: {"Authorization": jwt}),
-              builder: (context, snapshot) => snapshot.hasData
-                  ? Column(
-                      children: <Widget>[
-                        Text("${payload['username']}, here's the data:"),
-                        Text(snapshot.data.toString())
-                      ],
-                    )
-                  : snapshot.hasError
-                      ? Text("An error occurred")
-                      : CircularProgressIndicator()),
+              //future: getUserData(),
+              future: http.get(Uri.parse("$SERVER_IP/User/login"), headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer $jwt"
+              }),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done)
+                  return Column(
+                    children: <Widget>[
+                      getMainPage(),
+                    ],
+                  );
+                else
+                  return CircularProgressIndicator();
+              }),
         ),
       );
 }

@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'dart:convert' show json, base64, ascii;
+import 'dart:convert' show ascii, base64, json, jsonDecode;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,16 +19,15 @@ class LoginPage extends StatelessWidget {
 
   Future<String?> attemptLogIn(String username, String password) async {
     var res = await http.post(
-        Uri(scheme: 'https', host: SERVER_IP, path: '/login/'),
+        Uri.parse(
+            "$SERVER_IP/Account/token?username=$username&password=$password"),
         body: {"username": username, "password": password});
-    if (res.statusCode == 200) return res.body;
-    return null;
-  }
+    if (res.statusCode == 200) {
+      Map<String, dynamic> jwt_resp = jsonDecode(res.body);
+      return jwt_resp['access_token'];
+    }
+      return null;
 
-  Future<int> attemptSignUp(String username, String password) async {
-    var res = await http.post( Uri(scheme: 'https', host: SERVER_IP, path: '/signup/'),
-        body: {"username": username, "password": password});
-    return res.statusCode;
   }
 
   @override
@@ -69,30 +68,9 @@ class LoginPage extends StatelessWidget {
                   child: Text("Log In")),
               FlatButton(
                   onPressed: () async {
-                    var username = _usernameController.text;
-                    var password = _passwordController.text;
-
-                    if (username.length < 4)
-                      displayDialog(context, "Invalid Username",
-                          "The username should be at least 4 characters long");
-                    else if (password.length < 4)
-                      displayDialog(context, "Invalid Password",
-                          "The password should be at least 4 characters long");
-                    else {
-                      var res = await attemptSignUp(username, password);
-                      if (res == 201)
-                        displayDialog(context, "Success",
-                            "The user was created. Log in now.");
-                      else if (res == 409)
-                        displayDialog(
-                            context,
-                            "That username is already registered",
-                            "Please try to sign up using another username or log in if you already have an account.");
-                      else {
-                        displayDialog(
-                            context, "Error", "An unknown error occurred.");
-                      }
-                    }
+                    //TODO: SignUp API
+                    displayDialog(context, "Development in progress",
+                        "This feature in development");
                   },
                   child: Text("Sign Up"))
             ],
