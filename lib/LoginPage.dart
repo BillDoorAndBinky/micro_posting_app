@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'dart:convert' show ascii, base64, json, jsonDecode;
+import 'dart:convert' show ascii, base64, json, jsonDecode, jsonEncode;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -20,11 +20,12 @@ class LoginPage extends StatelessWidget {
   Future<String?> attemptLogIn(String username, String password) async {
     var res = await http.post(
         Uri.parse(
-            "$SERVER_IP/Account/token?username=$username&password=$password"),
-        body: {"username": username, "password": password});
+            "$SERVER_IP/Users/token/"),
+        headers: <String, String>{ "Content-Type": "application/json" },
+        body: jsonEncode({"login": username, "password": password}));
     if (res.statusCode == 200) {
       Map<String, dynamic> jwt_resp = jsonDecode(res.body);
-      return jwt_resp['access_token'];
+      return jwt_resp['token'];
     }
       return null;
 

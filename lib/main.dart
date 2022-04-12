@@ -6,7 +6,7 @@ import 'dart:convert' show json, base64, ascii;
 import 'HomePage.dart';
 import 'LoginPage.dart';
 
-const SERVER_IP = 'http://10.0.2.2:5072';
+const SERVER_IP = 'http://10.0.2.2:4000';
 final storage = FlutterSecureStorage();
 
 void main() {
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Micro Posts',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
