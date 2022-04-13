@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:micro_posting_app/LoginPage.dart';
+import 'package:micro_posting_app/ProfilePage.dart';
 import 'package:micro_posting_app/Services/CurrentUserService.dart';
 import 'package:micro_posting_app/Services/RouterService.dart';
 import 'package:micro_posting_app/Services/StorageService.dart';
@@ -26,11 +27,9 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
   static List<Widget> pages = <Widget>[
-    // TODO: Replace with ExploreScreen
     Container(color: Colors.white),
-    // TODO: Replace with RecipesScreen
     Container(color: Colors.green),
-    Container(color: Colors.blue),
+    ProfilePage(),
   ];
 
   void _onItemTapped(int index) {

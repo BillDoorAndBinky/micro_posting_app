@@ -21,7 +21,7 @@ class RouterService {
 
   Future<User?> GetUserDataToCurrentUserService() async {
     Map<String, String> headers = new Map();
-    headers["Authorization"] = "Bearer ${StorageService().jwtOrEmpty()}";
+    headers["Authorization"] = "Bearer ${await StorageService().jwtOrEmpty()}";
     var res = await http.get(Uri.parse("$SERVER_IP/Users/user-data/"),
         headers: headers);
     if (res.statusCode == 200) {

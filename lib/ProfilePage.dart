@@ -4,23 +4,15 @@ import 'Services/CurrentUserService.dart';
 import 'Services/RouterService.dart';
 
 class ProfilePage extends StatefulWidget {
-  final String authorName;
-  final String title;
-  final ImageProvider? imageProvider;
-
-  const ProfilePage({
-    Key? key,
-    required this.authorName,
-    required this.title,
-    this.imageProvider,
-  }) : super(key: key);
-
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  bool _isFavorited = false;
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
