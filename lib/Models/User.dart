@@ -1,7 +1,7 @@
-class User{
-  late int Id;
-  late String UserName;
-  late String FirstName;
-  late String LastName;
+class User {
+  late int Id = 0;
 
+  late String UserName = "";
+  late String FirstName = "";
+  late String LastName = "";
 }

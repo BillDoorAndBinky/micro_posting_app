@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
 
   _HomePageState(this.jwt, this.payload);
 
-  Future<bool> isAuth() async{
+  Future<bool> isAuth() async {
     return jwt != null;
   }
 
@@ -67,13 +67,13 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Center(
         child: FutureBuilder(
-            future: isAuth(),
+            future: _routerService.GetUserDataToCurrentUserService(jwt),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                _routerService.GetUserDataToCurrentUserService(jwt);
+                var user = CurrentUserService().CurrentUser;
                 return Column(
                   children: <Widget>[
-                    getMainPage(),
+                    Text("Hi! ${user?.UserName}  "),
                   ],
                 );
               } else

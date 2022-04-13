@@ -18,7 +18,7 @@ class RouterService{
     // initialization logic
   }
 
-  Future GetUserDataToCurrentUserService(String jwt) async {
+  Future<User?> GetUserDataToCurrentUserService(String jwt) async {
     Map<String, String> headers = new Map();
     headers["Authorization"] = "Bearer $jwt";
     var res = await http.get(Uri.parse("$SERVER_IP/Users/user-data/"), headers: headers);
@@ -28,8 +28,8 @@ class RouterService{
       currentUserService.CurrentUser?.FirstName = respLogin["firstName"];
       currentUserService.CurrentUser?.LastName = respLogin["lastName"];
       currentUserService.CurrentUser?.Id = respLogin["id"];
-      currentUserService.CurrentUser?.UserName = respLogin["userName"];
-      return;
+      currentUserService.CurrentUser?.UserName = respLogin["name"];
+      return currentUserService.CurrentUser;
     }
     return null;
   }
