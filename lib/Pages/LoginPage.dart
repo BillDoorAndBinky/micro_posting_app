@@ -1,13 +1,10 @@
 import 'package:http/http.dart' as http;
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert' show ascii, base64, json, jsonDecode, jsonEncode;
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:micro_posting_app/Services/RouterService.dart';
 
 import 'HomePage.dart';
-import 'Services/StorageService.dart';
-import 'main.dart';
+import '../main.dart';
 
 class LoginPage extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();

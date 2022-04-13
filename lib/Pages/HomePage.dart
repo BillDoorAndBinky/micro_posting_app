@@ -1,15 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:micro_posting_app/LoginPage.dart';
-import 'package:micro_posting_app/ProfilePage.dart';
-import 'package:micro_posting_app/Services/CurrentUserService.dart';
-import 'package:micro_posting_app/Services/RouterService.dart';
 import 'package:micro_posting_app/Services/StorageService.dart';
 
-import 'main.dart';
+import '../main.dart';
+import 'ProfilePage.dart';
 
 class HomePage extends StatefulWidget {
   @override

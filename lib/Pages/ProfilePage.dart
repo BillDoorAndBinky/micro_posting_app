@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'Services/CurrentUserService.dart';
-import 'Services/RouterService.dart';
+import '../Services/CurrentUserService.dart';
+import '../Services/RouterService.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
