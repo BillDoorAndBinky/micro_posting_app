@@ -5,6 +5,7 @@ import 'package:micro_posting_app/Services/StorageService.dart';
 
 import '../main.dart';
 import 'ProfilePage.dart';
+import 'UserPostsPage.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -22,7 +23,7 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
   static List<Widget> pages = <Widget>[
-    Container(color: Colors.white),
+    UserPostsPage(),
     Container(color: Colors.green),
     ProfilePage(),
   ];
