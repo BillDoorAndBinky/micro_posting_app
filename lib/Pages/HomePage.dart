@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:micro_posting_app/Pages/LoginPage.dart';
 import 'package:micro_posting_app/Services/StorageService.dart';
 
 import '../main.dart';
@@ -36,7 +37,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Secret Data Screen"),
+        title: const Text("Micro tip app"),
         actions: <Widget>[
           Padding(
               padding: EdgeInsets.only(right: 20.0),
@@ -44,7 +45,7 @@ class _HomePageState extends State<HomePage> {
                   onTap: () {
                     StorageService().clearStorage();
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => MyApp()));
+                        MaterialPageRoute(builder: (context) => LoginPage()));
                   },
                   child: StorageService().jwtOrEmpty != ""
                       ? Icon(Icons.logout)
