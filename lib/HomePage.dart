@@ -6,46 +6,37 @@ import 'package:http/http.dart' as http;
 import 'package:micro_posting_app/LoginPage.dart';
 import 'package:micro_posting_app/Services/CurrentUserService.dart';
 import 'package:micro_posting_app/Services/RouterService.dart';
+import 'package:micro_posting_app/Services/StorageService.dart';
 
 import 'main.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage(this.jwt, this.payload);
-
-  factory HomePage.fromBase64(String jwt) => HomePage(
-      jwt,
-      json.decode(
-          ascii.decode(base64.decode(base64.normalize(jwt.split(".")[1])))));
-
-  final String jwt;
-  final Map<String, dynamic> payload;
-
   @override
   State<StatefulWidget> createState() {
-    return _HomePageState(jwt, payload);
+    return _HomePageState();
   }
 }
 
 class _HomePageState extends State<HomePage> {
-  String jwt;
-  Map<String, dynamic> payload;
-
   @override
   void initState() {
     super.initState();
   }
 
-  final CurrentUserService _currentUserService = CurrentUserService();
-  final RouterService _routerService = RouterService();
+  int _selectedIndex = 0;
 
-  Text getMainPage() {
-    return Text("Hi, ${_currentUserService.CurrentUser?.UserName}!");
-  }
+  static List<Widget> pages = <Widget>[
+    // TODO: Replace with ExploreScreen
+    Container(color: Colors.white),
+    // TODO: Replace with RecipesScreen
+    Container(color: Colors.green),
+    Container(color: Colors.blue),
+  ];
 
-  _HomePageState(this.jwt, this.payload);
-
-  Future<bool> isAuth() async {
-    return jwt != null;
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
   @override
@@ -58,27 +49,34 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                   onTap: () {
-                    storage.deleteAll();
+                    StorageService().clearStorage();
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => MyApp()));
                   },
-                  child: jwt != "" ? Icon(Icons.logout) : Icon(Icons.login)))
+                  child: StorageService().jwtOrEmpty != ""
+                      ? Icon(Icons.logout)
+                      : Icon(Icons.login)))
         ],
       ),
-      body: Center(
-        child: FutureBuilder(
-            future: _routerService.GetUserDataToCurrentUserService(jwt),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                var user = CurrentUserService().CurrentUser;
-                return Column(
-                  children: <Widget>[
-                    Text("Hi! ${user?.UserName}  "),
-                  ],
-                );
-              } else
-                return CircularProgressIndicator();
-            }),
+      body: pages[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Theme.of(context).textSelectionTheme.selectionColor,
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        items: <BottomNavigationBarItem>[
+          const BottomNavigationBarItem(
+            icon: Icon(Icons.book_outlined),
+            label: 'My tips',
+          ),
+          const BottomNavigationBarItem(
+            icon: Icon(Icons.add_box_outlined),
+            label: 'New tip',
+          ),
+          const BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline),
+            label: 'Profile',
+          ),
+        ],
       ),
     );
   }
