@@ -24,8 +24,7 @@ class _UserPostsPageState extends State<UserPostsPage> {
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 return Center(
-                    child: Text((snapshot.data
-                        as List<Map<String, dynamic>>?)![0]["Title"]));
+                    child: Text("dasf"));
               } else
                 return CircularProgressIndicator();
             }),

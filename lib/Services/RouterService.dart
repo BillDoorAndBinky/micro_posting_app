@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:micro_posting_app/Models/UserPost.dart';
 import 'package:micro_posting_app/Services/CurrentUserService.dart';
 import 'package:micro_posting_app/Services/StorageService.dart';
 
@@ -48,13 +49,13 @@ class RouterService {
     return null;
   }
 
-  Future<List<Map<String, dynamic>>?> GetCurrentUserPosts() async {
+  Future<Iterable?> GetCurrentUserPosts() async {
     Map<String, String> headers = new Map();
     headers["Authorization"] = "Bearer ${await StorageService().jwtOrEmpty()}";
     var res = await http.get(Uri.parse("$SERVER_IP/Users/user-posts/"),
         headers: headers);
     if (res.statusCode == 200) {
-      List<Map<String, dynamic>> posts = jsonDecode(res.body);
+      Iterable posts = jsonDecode(res.body);
 
       return posts;
     }
