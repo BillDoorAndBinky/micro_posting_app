@@ -23,8 +23,31 @@ class _UserPostsPageState extends State<UserPostsPage> {
             future: RouterService().GetCurrentUserPosts(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                return Center(
-                    child: Text("dasf"));
+                /*return Column(
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          'Notifications',
+                          style: TextStyle(color: Colors.white, fontSize: 25),
+                        ),
+                      ],
+                    ),
+                  ],
+                );*/
+                var widgets = (snapshot.data as Iterable?)!
+                    .map((post) => Row(children: <Widget>[
+                          Text("${post["title"]}:",
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 20)),
+                          Text("${post["text"]}",
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 15))
+                        ]))
+                    .toList();
+                return Column(children: widgets);
+                return Text("dsad");
               } else
                 return CircularProgressIndicator();
             }),
