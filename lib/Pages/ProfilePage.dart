@@ -24,43 +24,42 @@ class _ProfilePageState extends State<ProfilePage> {
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 var user = CurrentUserService().CurrentUser;
-                return Center(
-                    child: Column(
-                  children: <Widget>[Padding(
-                      padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                      child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            "User Profile:",
-                            style: TextStyle(
-                              fontSize: 20,
-                              height: 2.0,
-                            ),
-                          ))),
-                    Padding(
-                        padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                        child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              "User name: ${user?.UserName}",
-                              style: TextStyle(
-                                fontSize: 16,
-                                height: 1.4,
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'User data:',
+                      style: Theme.of(context).textTheme.headline3,
+                    ),
+                    const SizedBox(height: 16),
+                    Column(
+                      children: <Widget>[
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Icon(Icons.person),
+                                  Text("User name:"),
+                                  Text(
+                                    "${user?.FirstName} ${user?.LastName}",
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1,
+                                  )
+                                ],
                               ),
-                            ))),
-                    Padding(
-                        padding: EdgeInsets.fromLTRB(10,10, 10, 10),
-                        child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              "${user?.FirstName} ${user?.LastName}",
-                              style: TextStyle(
-                                fontSize: 12,
-                                height: 1.0,
-                              ),
-                            )))
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
                   ],
-                ));
+                );
               } else
                 return CircularProgressIndicator();
             }),
